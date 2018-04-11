@@ -1,0 +1,6 @@
+1.npm install googleapis 失敗
+ERR! Refusing to install package with name "googleapis" under a package also called "googleapis". 
+Did you name your project the same as the dependency you're installing?
+ > Ans:
+package.json裡面的name(就是專案名稱)也叫googleapis...........傻眼，把他改掉吧...
+

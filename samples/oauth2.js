@@ -30,8 +30,10 @@ const plus = google.plus('v1');
 const keyPath = path.join(__dirname, 'oauth2.keys.json');
 let keys = { redirect_uris: [''] };
 if (fs.existsSync(keyPath)) {
-  keys = require(keyPath).web;
+  keys = require(keyPath).installed;
+  console.log(">>> " + keys.redirect_uris);
 }
+
 
 /**
  * Create a new OAuth2 client with the configured keys.
@@ -39,7 +41,7 @@ if (fs.existsSync(keyPath)) {
 const oauth2Client = new google.auth.OAuth2(
   keys.client_id,
   keys.client_secret,
-  keys.redirect_uris[0]
+  keys.redirect_uris[1]
 );
 
 /**
@@ -59,6 +61,7 @@ async function authenticate (scopes) {
     });
     const server = http.createServer(async (req, res) => {
       try {
+        console.log(">>>  " + req.url)
         if (req.url.indexOf('/oauth2callback') > -1) {
           const qs = querystring.parse(url.parse(req.url).query);
           res.end('Authentication successful! Please return to the console.');
@@ -81,7 +84,6 @@ async function authenticate (scopes) {
 async function runSample () {
   // retrieve user profile
   const res = await plus.people.get({ userId: 'me' });
-  console.log(res.data);
 }
 
 const scopes = ['https://www.googleapis.com/auth/plus.me'];

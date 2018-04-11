@@ -15,20 +15,30 @@
 
 const {google} = require('googleapis');
 const sampleClient = require('../sampleclient');
+var fs = require("fs");
 
 // initialize the Youtube API library
 const youtube = google.youtube({
   version: 'v3',
   auth: sampleClient.oAuth2Client
 });
+console.log("credentials = " + oAuth2Client.credentials);
 
 // a very simple example of searching for youtube videos
 async function runSample () {
+  console.log("credentials in run sample = " + oAuth2Client.credentials);
   const res = youtube.search.list({
     part: 'id,snippet',
     q: 'Node.js on Google Cloud'
   });
-  console.log(res.data);
+  // 為什麼不能直接用res.data來show?
+  res.then((value) => {
+    var s = JSON.stringify(value.data, null, 2);
+    fs.writeFile("../search_result.json", s, function(err) {
+        console.log("write finish.")
+    });
+    console.log(s);
+});
 }
 
 const scopes = [

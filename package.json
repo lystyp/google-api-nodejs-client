@@ -38,7 +38,7 @@
     "url": "https://github.com/google/google-api-nodejs-client.git",
     "type": "git"
   },
-  "name": "googleapis",
+  "name": "googleapis_for_node.js",
   "contributors": [
     {
       "email": "jbd@google.com",
